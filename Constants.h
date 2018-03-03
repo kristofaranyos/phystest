@@ -12,8 +12,8 @@
 #include <SDL2/SDL.h>
 
 //graphics settings
-const int SCREEN_WIDTH  = 1920;
-const int SCREEN_HEIGHT = 1080;
+const int SCREEN_WIDTH  = 1500;
+const int SCREEN_HEIGHT = 800;
 const Uint32 WINDOW_TYPE = SDL_WINDOW_SHOWN;
 // interval is 1/fps
 const int FRAME_INTERVAL = 20; //50fps

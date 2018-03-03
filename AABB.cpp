@@ -13,7 +13,7 @@
  * @param m_entityId ID of the entity (so its trackable among multiple instances)
  * @param createdAt Uint32 timestamp of creation returned by SDL_GetTicks()
  */
-AABB::AABB(unsigned int m_entityId, Uint32 createdAt)
+AABB::AABB(unsigned long m_entityId, Uint32 createdAt)
 	: m_entityId(m_entityId)
 	, m_posX(0)
 	, m_posY(0)
@@ -36,7 +36,7 @@ AABB::AABB(unsigned int m_entityId, Uint32 createdAt)
  * @param velY Y velocity of entity (>=0)
  * @param createdAt Uint32 timestamp of creation returned by SDL_GetTicks()
  */
-AABB::AABB(unsigned int entityId, int posX, int posY, int width, int height, float velX, float velY, Uint32 createdAt)
+AABB::AABB(unsigned long entityId, int posX, int posY, int width, int height, float velX, float velY, Uint32 createdAt)
 	: m_entityId(entityId)
 	, m_posX(posX)
 	, m_posY(posY)
@@ -144,4 +144,32 @@ void AABB::setSize(std::pair<int, int> size, ParamSelect params) {
  */
 std::pair<int, int> AABB::getSize() const {
 	return std::pair<int, int>(this->m_width, this->m_height);
+}
+
+/**
+ * Returns the entity id
+ *
+ * @return unsigned long m_entityId
+ */
+unsigned long AABB::getEntityId() const {
+	return this->m_entityId;
+}
+
+/**
+ * Returns the timestamp of creation
+ *
+ * @return Uint32 m_createdAt
+ */
+
+Uint32 AABB::getCreatedAt() const {
+	return this->m_createdAt;
+}
+
+void AABB::draw(SDL_Renderer *renderer, SDL_Color color) const {
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+	for (int i = 1; i < this->m_width ; ++i) {
+		for (int j = 1; j < this->m_height; ++j) {
+			SDL_RenderDrawPoint(renderer, this->m_posX + i, this->m_posY + j);
+		}
+	}
 }
