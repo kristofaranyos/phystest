@@ -1,22 +1,10 @@
 #include <iostream>
-#include <cstdint>
 #include <vector>
 
 #include <SDL2/SDL.h>
 
-//graphics settings
-const int SCREEN_WIDTH  = 1500;
-const int SCREEN_HEIGHT = 800;
-const int FRAME_INTERVAL = 20;
+#include "Constants.h"
 
-//physics settings
-const float GRAVITY = 9.81;
-const float THROW_SPEEDX = 000.1;
-const float THROW_SPEEDY = 00000.1;
-const float WALL_BOUNCE = 0.2f;
-
-//dont edit this
-const float TO_SEC = 0.001f;
 
 //axis aligned bounding boxes for rectangles
 typedef struct {
@@ -64,7 +52,7 @@ int main() {
 		return 1;
 	}
 
-	SDL_Window *window = SDL_CreateWindow("physics simulator", 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	SDL_Window *window = SDL_CreateWindow("physics simulator", 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TYPE);
 	if (window == nullptr) {
 		std::cout << "CreateWindow error: " << SDL_GetError() << std::endl;
 		SDL_Quit();

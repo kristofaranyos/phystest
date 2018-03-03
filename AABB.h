@@ -1,12 +1,15 @@
-//
-// Created by kristof on 2018.03.03..
-//
-
+/**
+ * AABB declarations
+ *
+ * @author kristof
+ * @version 1.0.0
+ */
 #ifndef PHYSTEST_AABB_H
 #define PHYSTEST_AABB_H
 
 #include <utility>
-#include <SDL_quit.h>
+
+#include <SDL2/SDL.h>
 
 class AABB {
 private:
