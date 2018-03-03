@@ -9,6 +9,7 @@
 
 /**
  * Basic ctor for AABB
+ *
  * @param m_entityId ID of the entity (so its trackable among multiple instances)
  * @param createdAt Uint32 timestamp of creation returned by SDL_GetTicks()
  */
@@ -25,6 +26,7 @@ AABB::AABB(unsigned int m_entityId, Uint32 createdAt)
 
 /**
  * Full ctor for AABB
+ *
  * @param entityId ID of the entity (so its trackable among multiple instances)
  * @param posX X position of the entity (>=0)
  * @param posY Y position of the entity (>=0)
@@ -47,6 +49,7 @@ AABB::AABB(unsigned int entityId, int posX, int posY, int width, int height, flo
 
 /**
  * Sets one or two components of the position of the entity
+ *
  * @param position std::pair<int, int> containing x and y positions, unused position can be arbitrary
  * @param params ParamSelect enum defining which position to set
  */
@@ -70,6 +73,7 @@ void AABB::setPos(std::pair<int, int> position, ParamSelect params) {
 
 /**
  * Returns the current position of the entity
+ *
  * @return std::pair<int, int> containing x and y position
  */
 std::pair<int, int> AABB::getPos() const {
@@ -78,6 +82,7 @@ std::pair<int, int> AABB::getPos() const {
 
 /**
  * Sets one or two components of the speed of the entity
+ *
  * @param speed position std::pair<float, float> containing x and y speeds, unused position can be arbitrary
  * @param params ParamSelect enum defining which speed to set
  */
@@ -101,6 +106,7 @@ void AABB::setSpeed(std::pair<float, float> speed, ParamSelect params){
 
 /**
  * Returns the current speed of the entity
+ *
  * @return std::pair<int, int> containing x and y speed
  */
 std::pair<float, float> AABB::getSpeed() const {
@@ -109,6 +115,7 @@ std::pair<float, float> AABB::getSpeed() const {
 
 /**
  * Sets one or two components of the size of the entity
+ *
  * @param position std::pair<float, float> containing width and height, unused position can be arbitrary
  * @param params ParamSelect enum defining which size to set
  */
@@ -132,6 +139,7 @@ void AABB::setSize(std::pair<int, int> size, ParamSelect params) {
 
 /**
  * Returns the current size of the entity
+ *
  * @return std::pair<int, int> containing width and height
  */
 std::pair<int, int> AABB::getSize() const {
