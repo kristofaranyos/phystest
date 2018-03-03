@@ -6,6 +6,7 @@
 #define PHYSTEST_AABB_H
 
 #include <utility>
+#include <SDL_quit.h>
 
 class AABB {
 private:
@@ -16,18 +17,21 @@ private:
     int m_height;
     float m_velX; // positive = right, negative = left
     float m_velY; // positive = down. negative = up
-    unsigned int m_createdAt;
+    Uint32 m_createdAt;
 public:
-    AABB(unsigned int m_entityId, unsigned int createdAt);
-	AABB(unsigned int m_entityId, int posX, int posY, int width, int height, int velX, int velY, unsigned int createdAt);
+    AABB(unsigned int m_entityId, Uint32 createdAt);
+	AABB(unsigned int m_entityId, int posX, int posY, int width, int height, float velX, float velY, Uint32 createdAt);
 
 	enum ParamSelect {First, Second, Both};
 
 	void setPos(std::pair<int, int> position, ParamSelect params);
 	std::pair<int, int> getPos() const;
 
-	void setSpeed(std::pair<int, int> speed, ParamSelect params);
-	std::pair<int, int> getSpeed() const;
+	void setSpeed(std::pair<float, float> speed, ParamSelect params);
+	std::pair<float, float> getSpeed() const;
+
+	void setSize(std::pair<int, int> position, ParamSelect params);
+	std::pair<int, int> getSize() const;
 
 };
 

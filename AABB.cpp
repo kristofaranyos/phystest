@@ -1,10 +1,18 @@
-//
-// Created by kristof on 2018.03.03..
-//
+/**
+ * Axis Aligned Bounding Box: basic rectangle-like entity
+ *
+ * @author kristof
+ * @version 1.0.1
+ */
 
 #include "AABB.h"
 
-AABB::AABB(unsigned int m_entityId, unsigned int createdAt)
+/**
+ * Basic ctor for AABB
+ * @param m_entityId ID of the entity (so its trackable among multiple instances)
+ * @param createdAt Uint32 timestamp of creation returned by SDL_GetTicks()
+ */
+AABB::AABB(unsigned int m_entityId, Uint32 createdAt)
 	: m_entityId(m_entityId)
 	, m_posX(0)
 	, m_posY(0)
@@ -15,7 +23,18 @@ AABB::AABB(unsigned int m_entityId, unsigned int createdAt)
 	, m_createdAt(createdAt)
 {}
 
-AABB::AABB(unsigned int entityId, int posX, int posY, int width, int height, int velX, int velY, unsigned int createdAt)
+/**
+ * Full ctor for AABB
+ * @param entityId ID of the entity (so its trackable among multiple instances)
+ * @param posX X position of the entity (>=0)
+ * @param posY Y position of the entity (>=0)
+ * @param width Width of entity (>=0)
+ * @param height Height of entity (>=0)
+ * @param velX X velocity of entity (>=0)
+ * @param velY Y velocity of entity (>=0)
+ * @param createdAt Uint32 timestamp of creation returned by SDL_GetTicks()
+ */
+AABB::AABB(unsigned int entityId, int posX, int posY, int width, int height, float velX, float velY, Uint32 createdAt)
 	: m_entityId(entityId)
 	, m_posX(posX)
 	, m_posY(posY)
@@ -26,7 +45,11 @@ AABB::AABB(unsigned int entityId, int posX, int posY, int width, int height, int
 	, m_createdAt(createdAt)
 {}
 
-
+/**
+ * Sets one or two components of the position of the entity
+ * @param position std::pair<int, int> containing x and y positions, unused position can be arbitrary
+ * @param params ParamSelect enum defining which position to set
+ */
 void AABB::setPos(std::pair<int, int> position, ParamSelect params) {
 	if (params == ParamSelect::First || params == ParamSelect::Both) {
 		if (position.first >= 0) {
@@ -45,12 +68,20 @@ void AABB::setPos(std::pair<int, int> position, ParamSelect params) {
 	}
 }
 
+/**
+ * Returns the current position of the entity
+ * @return std::pair<int, int> containing x and y position
+ */
 std::pair<int, int> AABB::getPos() const {
 	return std::pair<int, int>(this->m_posX, this->m_posY);
 }
 
-
-void AABB::setSpeed(std::pair<int, int> speed, ParamSelect params){
+/**
+ * Sets one or two components of the speed of the entity
+ * @param speed position std::pair<float, float> containing x and y speeds, unused position can be arbitrary
+ * @param params ParamSelect enum defining which speed to set
+ */
+void AABB::setSpeed(std::pair<float, float> speed, ParamSelect params){
 	if (params == ParamSelect::First || params == ParamSelect::Both) {
 		if (speed.first >= 0) {
 			this->m_velX = speed.first;
@@ -68,7 +99,41 @@ void AABB::setSpeed(std::pair<int, int> speed, ParamSelect params){
 	}
 }
 
-std::pair<int, int> AABB::getSpeed() const {
+/**
+ * Returns the current speed of the entity
+ * @return std::pair<int, int> containing x and y speed
+ */
+std::pair<float, float> AABB::getSpeed() const {
 	return std::pair<int, int>(this->m_velX, this->m_velY);
 }
 
+/**
+ * Sets one or two components of the size of the entity
+ * @param position std::pair<float, float> containing width and height, unused position can be arbitrary
+ * @param params ParamSelect enum defining which size to set
+ */
+void AABB::setSize(std::pair<int, int> size, ParamSelect params) {
+	if (params == ParamSelect::First || params == ParamSelect::Both) {
+		if (size.first >= 0) {
+			this->m_width = size.first;
+		} else {
+			//todo throw OutOfBoundsException
+		}
+	}
+
+	if (params == ParamSelect::Second || params == ParamSelect::Both) {
+		if (size.second >= 0) {
+			this->m_height = size.second;
+		} else {
+			//todo throw OutOfBoundsException
+		}
+	}
+}
+
+/**
+ * Returns the current size of the entity
+ * @return std::pair<int, int> containing width and height
+ */
+std::pair<int, int> AABB::getSize() const {
+	return std::pair<int, int>(this->m_width, this->m_height);
+}
