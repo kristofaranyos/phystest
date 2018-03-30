@@ -7,6 +7,9 @@
 
 #include "AABB.h"
 
+#include <exception>
+#include <stdexcept>
+
 /**
  * Basic ctor for AABB
  *
@@ -73,7 +76,7 @@ void AABB::setPos(std::pair<int, int> position, ParamSelect params) {
 		if (position.first >= 0) {
 			this->m_posX = position.first;
 		} else {
-			//todo throw OutOfBoundsException
+			throw std::out_of_range("First parameter of setPos is out of bounds");
 		}
 	}
 
@@ -81,7 +84,7 @@ void AABB::setPos(std::pair<int, int> position, ParamSelect params) {
 		if (position.second >= 0) {
 			this->m_posY = position.second;
 		} else {
-			//todo throw OutOfBoundsException
+			throw std::out_of_range("Second parameter of setPos is out of bounds");
 		}
 	}
 }
@@ -106,7 +109,7 @@ void AABB::setSpeed(std::pair<float, float> speed, ParamSelect params){
 		if (speed.first >= 0) {
 			this->m_velX = speed.first;
 		} else {
-			//todo throw OutOfBoundsException
+			throw std::out_of_range("First parameter of setSpeed is out of bounds");
 		}
 	}
 
@@ -114,7 +117,7 @@ void AABB::setSpeed(std::pair<float, float> speed, ParamSelect params){
 		if (speed.second >= 0) {
 			this->m_velY = speed.second;
 		} else {
-			//todo throw OutOfBoundsException
+			throw std::out_of_range("Second parameter of setSpeed is out of bounds");
 		}
 	}
 }
@@ -139,7 +142,7 @@ void AABB::setSize(std::pair<int, int> size, ParamSelect params) {
 		if (size.first >= 0) {
 			this->m_width = size.first;
 		} else {
-			//todo throw OutOfBoundsException
+			throw std::out_of_range("First parameter of setSize is out of bounds");
 		}
 	}
 
@@ -147,7 +150,7 @@ void AABB::setSize(std::pair<int, int> size, ParamSelect params) {
 		if (size.second >= 0) {
 			this->m_height = size.second;
 		} else {
-			//todo throw OutOfBoundsException
+			throw std::out_of_range("Second parameter of setSize is out of bounds");
 		}
 	}
 }
