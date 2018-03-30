@@ -7,7 +7,6 @@
 
 #include "AABB.h"
 
-#include <exception>
 #include <stdexcept>
 
 /**
@@ -99,35 +98,27 @@ std::pair<int, int> AABB::getPos() const {
 }
 
 /**
- * Sets one or two components of the speed of the entity
+ * Sets one or two components of the velocity of the entity
  *
- * @param speed position std::pair<float, float> containing x and y speeds, unused position can be arbitrary
- * @param params ParamSelect enum defining which speed to set
+ * @param velocity position std::pair<float, float> containing x and y velocities, unused position can be arbitrary
+ * @param params ParamSelect enum defining which velocity to set
  */
-void AABB::setSpeed(std::pair<float, float> speed, ParamSelect params){
+void AABB::setVel(std::pair<float, float> velocity, ParamSelect params){
 	if (params == ParamSelect::First || params == ParamSelect::Both) {
-		if (speed.first >= 0) {
-			this->m_velX = speed.first;
-		} else {
-			throw std::out_of_range("First parameter of setSpeed is out of bounds");
-		}
+		this->m_velX = velocity.first;
 	}
 
 	if (params == ParamSelect::Second || params == ParamSelect::Both) {
-		if (speed.second >= 0) {
-			this->m_velY = speed.second;
-		} else {
-			throw std::out_of_range("Second parameter of setSpeed is out of bounds");
-		}
+		this->m_velY = velocity.second;
 	}
 }
 
 /**
- * Returns the current speed of the entity
+ * Returns the current velocity of the entity
  *
- * @return std::pair<int, int> containing x and y speed
+ * @return std::pair<int, int> containing x and y velocity
  */
-std::pair<float, float> AABB::getSpeed() const {
+std::pair<float, float> AABB::getVel() const {
 	return std::pair<int, int>(this->m_velX, this->m_velY);
 }
 

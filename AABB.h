@@ -30,8 +30,8 @@ public:
 	void setPos(std::pair<int, int> position, ParamSelect params);
 	std::pair<int, int> getPos() const;
 
-	void setSpeed(std::pair<float, float> speed, ParamSelect params);
-	std::pair<float, float> getSpeed() const;
+	void setVel(std::pair<float, float> speed, ParamSelect params);
+	std::pair<float, float> getVel() const;
 
 	void setSize(std::pair<int, int> position, ParamSelect params);
 	std::pair<int, int> getSize() const;

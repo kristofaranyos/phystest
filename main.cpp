@@ -11,6 +11,7 @@
 
 #include <SDL2/SDL.h>
 
+#include "SDLWrapper.h"
 #include "Constants.h"
 #include "AABB.h"
 
@@ -18,23 +19,12 @@ int main() {
 	//disable c stream syncing
 	std::ios::sync_with_stdio(false);
 
-	if (SDL_InitSubSystem(SDL_INIT_EVERYTHING) != 0) {
-		std::cout << "SDL_Init error: " << SDL_GetError() << std::endl;
-		return 1;
-	}
+	SDLWrapper wrapper(std::string("phystest"), 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TYPE);
 
-	SDL_Window *window = SDL_CreateWindow("phystest", 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TYPE);
-	if (window == nullptr) {
-		std::cout << "CreateWindow error: " << SDL_GetError() << std::endl;
-		SDL_Quit();
-		return 1;
-	}
-
-	SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	if (renderer == nullptr) {
-		std::cout << "CreateRenderer error: " << SDL_GetError() << std::endl;
-		SDL_DestroyWindow(window);
-		SDL_Quit();
+	try {
+		wrapper.init();
+	} catch (const std::exception &e) {
+		std::cout << e.what() << "\n";
 		return 1;
 	}
 
@@ -85,25 +75,25 @@ int main() {
 		}
 
 		//reset screen
-		SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-		SDL_RenderClear(renderer);
+		SDL_SetRenderDrawColor(wrapper.getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_RenderClear(wrapper.getRenderer());
 
 
 		//recalculate states
 		for (auto &entity : entities) {
 			tTime = (SDL_GetTicks() - entity.getCreatedAt()) * TO_SEC;
-			tSpeedY = entity.getSpeed().second + GRAVITY * tTime; //todo do something with this
-			tPosX = (int)std::round(entity.getPos().first + entity.getSpeed().first * tTime);
-			tPosY = (int)std::round(entity.getPos().second + entity.getSpeed().second * tTime + GRAVITY / 2.f * tTime * tTime); //todo do something with this
+			tSpeedY = entity.getVel().second + GRAVITY * tTime; //todo do something with this
+			tPosX = (int)std::round(entity.getPos().first + entity.getVel().first * tTime);
+			tPosY = (int)std::round(entity.getPos().second + entity.getVel().second * tTime + GRAVITY / 2.f * tTime * tTime); //todo do something with this
 
 			//X bounds
 			//todo unfuck x bounds
 			if (tPosX < 0) {
 				entity.setPos(std::pair<int, int>(0, 0), AABB::ParamSelect::First);
-				entity.setSpeed(std::pair<float, float>(-entity.getSpeed().first * WALL_BOUNCE, 0.f), AABB::ParamSelect::First);
+				entity.setVel(std::pair<float, float>(-entity.getVel().first * WALL_BOUNCE, 0.f), AABB::ParamSelect::First);
 			} else if (tPosX > SCREEN_WIDTH - entity.getSize().first) {
 				entity.setPos(std::pair<int, int>(SCREEN_WIDTH - entity.getSize().first, 0), AABB::ParamSelect::First);
-				entity.setSpeed(std::pair<float, float>(-entity.getSpeed().first * WALL_BOUNCE, 0.f), AABB::ParamSelect::First);
+				entity.setVel(std::pair<float, float>(-entity.getVel().first * WALL_BOUNCE, 0.f), AABB::ParamSelect::First);
 			} else {
 				entity.setPos(std::pair<int, int>(tPosX, 0), AABB::ParamSelect::First);
 			}
@@ -136,12 +126,12 @@ int main() {
 			*/
 
 			//draw entity
-			entity.draw(renderer, color);
+			entity.draw(wrapper.getRenderer(), color);
 
 		}
 
-		//
-		SDL_RenderPresent(renderer);
+		//draw show changes
+		SDL_RenderPresent(wrapper.getRenderer());
 
 		//if this int is an Uint32 it crashes for some reason
 		int delay = FRAME_INTERVAL - (SDL_GetTicks() - firstTime);
@@ -150,8 +140,9 @@ int main() {
 		}
 	}
 
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
+	//quit close sdl
+	SDL_DestroyRenderer(wrapper.getRenderer());
+	SDL_DestroyWindow(wrapper.getWindow());
 	SDL_Quit();
 
 	return 0;
