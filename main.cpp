@@ -18,7 +18,7 @@ int main() {
 	//disable c stream syncing
 	std::ios::sync_with_stdio(false);
 
-	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+	if (SDL_InitSubSystem(SDL_INIT_EVERYTHING) != 0) {
 		std::cout << "SDL_Init error: " << SDL_GetError() << std::endl;
 		return 1;
 	}
@@ -92,11 +92,12 @@ int main() {
 		//recalculate states
 		for (auto &entity : entities) {
 			tTime = (SDL_GetTicks() - entity.getCreatedAt()) * TO_SEC;
-			tSpeedY = entity.getSpeed().second + GRAVITY * tTime;
+			tSpeedY = entity.getSpeed().second + GRAVITY * tTime; //todo do something with this
 			tPosX = (int)std::round(entity.getPos().first + entity.getSpeed().first * tTime);
-			tPosY = (int)std::round(entity.getPos().second + entity.getSpeed().second * tTime + GRAVITY / 2.f * tTime * tTime);
+			tPosY = (int)std::round(entity.getPos().second + entity.getSpeed().second * tTime + GRAVITY / 2.f * tTime * tTime); //todo do something with this
 
 			//X bounds
+			//todo unfuck x bounds
 			if (tPosX < 0) {
 				entity.setPos(std::pair<int, int>(0, 0), AABB::ParamSelect::First);
 				entity.setSpeed(std::pair<float, float>(-entity.getSpeed().first * WALL_BOUNCE, 0.f), AABB::ParamSelect::First);
@@ -107,6 +108,7 @@ int main() {
 				entity.setPos(std::pair<int, int>(tPosX, 0), AABB::ParamSelect::First);
 			}
 
+			//todo implement y bounds
 			/*
 			//Y bounds
 			if (tPosY < SCREEN_HEIGHT - entities[i].r) {
@@ -133,11 +135,14 @@ int main() {
 			}
 			*/
 
+			//draw entity
 			entity.draw(renderer, color);
 
 		}
 
+		//
 		SDL_RenderPresent(renderer);
+
 		//if this int is an Uint32 it crashes for some reason
 		int delay = FRAME_INTERVAL - (SDL_GetTicks() - firstTime);
 		if (delay >= 0) {
