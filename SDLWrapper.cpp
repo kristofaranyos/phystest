@@ -33,6 +33,18 @@ void SDLWrapper::init() {
 	}
 }
 
+void SDLWrapper::drawColor(SDL_Color color) {
+	SDL_SetRenderDrawColor(this->m_renderer, color.r, color.g, color.b, color.a);
+}
+
+void SDLWrapper::renderClear() {
+	SDL_RenderClear(this->m_renderer);
+}
+
+void SDLWrapper::drawScreen() {
+	SDL_RenderPresent(this->m_renderer);
+}
+
 SDL_Window *SDLWrapper::getWindow() {
 	return this->m_window;
 }

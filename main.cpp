@@ -32,13 +32,18 @@ int main() {
 	unsigned startTime = SDL_GetTicks(), firstTime;
 	int mouseState, clicked = -1, clickTimes[2],  mousePositions[2][2];
 	int tPosX, tPosY;
-	float tSpeedX, tSpeedY, tTime, startSpeed[2];
+	float tSpeedY, tTime, startSpeed[2];
 
+	//colors
+	SDL_Color whiteColor = {255, 255, 255, 255};
+	SDL_Color blackColor = {0, 0, 0, 255};
+
+	//entity storage
 	std::vector<AABB> entities;
+
+	//main loop stuff
 	SDL_Event e;
 	bool quit = false;
-
-	SDL_Color color = {0, 0, 0, 255};
 
 	while (!quit) {
 		firstTime = SDL_GetTicks();
@@ -66,7 +71,7 @@ int main() {
 				startSpeed[0] = (mousePositions[1][0] - mousePositions[0][0]) / ((clickTimes[1] - clickTimes[0]) * TO_SEC) * THROW_SPEEDX;
 				startSpeed[1] = (mousePositions[1][1] - mousePositions[0][1]) / ((clickTimes[1] - clickTimes[0]) * TO_SEC) * THROW_SPEEDY;
 
-				AABB newEntity(entities.size(), mousePositions[1][0] - 10, mousePositions[1][1] - 10, 20, 20, startSpeed[0], startSpeed[1], SDL_GetTicks());
+				AABB newEntity(entities.size(), mousePositions[1][0] - 10, mousePositions[1][1] - 10, 20, 20, startSpeed[0], startSpeed[1], 0.01f , SDL_GetTicks());
 				entities.push_back(newEntity);
 
 				std::cout << "added entity: " << newEntity.getEntityId() << " at " << (SDL_GetTicks() - startTime) * TO_SEC << std::endl;
@@ -75,19 +80,17 @@ int main() {
 		}
 
 		//reset screen
-		SDL_SetRenderDrawColor(wrapper.getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
-		SDL_RenderClear(wrapper.getRenderer());
-
+		wrapper.drawColor(whiteColor);
+		wrapper.renderClear();
 
 		//recalculate states
 		for (auto &entity : entities) {
 			tTime = (SDL_GetTicks() - entity.getCreatedAt()) * TO_SEC;
-			tSpeedY = entity.getVel().second + GRAVITY * tTime; //todo do something with this
+			tSpeedY = entity.getVel().second + GRAVITY * tTime;
 			tPosX = (int)std::round(entity.getPos().first + entity.getVel().first * tTime);
-			tPosY = (int)std::round(entity.getPos().second + entity.getVel().second * tTime + GRAVITY / 2.f * tTime * tTime); //todo do something with this
+			tPosY = (int)std::round(entity.getPos().second + entity.getVel().second * tTime + GRAVITY / 2.f * tTime * tTime);
 
 			//X bounds
-			//todo unfuck x bounds
 			if (tPosX < 0) {
 				entity.setPos(std::pair<int, int>(0, 0), AABB::ParamSelect::First);
 				entity.setVel(std::pair<float, float>(-entity.getVel().first * WALL_BOUNCE, 0.f), AABB::ParamSelect::First);
@@ -98,40 +101,47 @@ int main() {
 				entity.setPos(std::pair<int, int>(tPosX, 0), AABB::ParamSelect::First);
 			}
 
-			//todo implement y bounds
-			/*
+
 			//Y bounds
-			if (tPosY < SCREEN_HEIGHT - entities[i].r) {
-				entities[i].y = tPosY;
-				entities[i].velY = tSpeedY;
+			if (tPosY < SCREEN_HEIGHT - entity.getSize().first) {
+				entity.setPos(std::pair<int, int>(0, tPosY), AABB::ParamSelect::Second);
+				entity.setVel(std::pair<float, float>(0.f, tSpeedY), AABB::ParamSelect::Second);
 			} else {
-				entities[i].y = SCREEN_HEIGHT - entities[i].r;
-				entities[i].velY = 0;
-				if (entities[i].velX > 0) {
-					if (entities[i].velX - GRAVITY * entities[i].fricCoeff * tTime > 0) {
-						entities[i].velX -= GRAVITY * entities[i].fricCoeff * tTime;
-						entities[i].x -= (GRAVITY * entities[i].fricCoeff * tTime) / 2 * tTime * tTime;
+				entity.setPos(std::pair<int, int>(0, SCREEN_HEIGHT - entity.getSize().second), AABB::ParamSelect::Second);
+				entity.setVel(std::pair<float, float>(0.f, 0.f), AABB::ParamSelect::Second);
+			}
+
+			//friction
+			if (tPosY >= SCREEN_HEIGHT - entity.getSize().first) {
+				if (entity.getVel().first > 0) {
+					if (entity.getVel().first - GRAVITY * entity.getFricCoeff() * tTime > 0) {
+						float newVelX = entity.getVel().first - GRAVITY * entity.getFricCoeff() * tTime;
+						entity.setVel(std::pair<int, int>(newVelX, 0), AABB::ParamSelect::First);
+
+						int newX = entity.getPos().first - (int)std::round((GRAVITY * entity.getFricCoeff() * tTime) / 2 * tTime * tTime);
+						entity.setPos(std::pair<int, int>(newX, 0), AABB::ParamSelect::First);
 					} else {
-						entities[i].velX = 0;
+						entity.setVel(std::pair<float, float>(0.f, 0.f), AABB::ParamSelect::First);
 					}
-				} else if (entities[i].velX < 0) {
-					if (entities[i].velX + GRAVITY * entities[i].fricCoeff * tTime < 0) {
-						entities[i].velX += GRAVITY * entities[i].fricCoeff * tTime;
-						entities[i].x += (GRAVITY * entities[i].fricCoeff * tTime) / 2 * tTime * tTime;
+				} else if (entity.getVel().first < 0) {
+					if (entity.getVel().first + GRAVITY * entity.getFricCoeff() * tTime < 0) {
+						float newVelX = entity.getVel().first + GRAVITY * entity.getFricCoeff() * tTime;
+						entity.setVel(std::pair<int, int>(newVelX, 0), AABB::ParamSelect::First);
+
+						int newX = entity.getPos().first + (int)std::round((GRAVITY * entity.getFricCoeff() * tTime) / 2 * tTime * tTime);
+						entity.setPos(std::pair<int, int>(newX, 0), AABB::ParamSelect::First);
 					} else {
-						entities[i].velX = 0;
+						entity.setVel(std::pair<float, float>(0.f, 0.f), AABB::ParamSelect::First);
 					}
 				}
 			}
-			*/
 
 			//draw entity
-			entity.draw(wrapper.getRenderer(), color);
-
+			entity.draw(wrapper.getRenderer(), blackColor);
 		}
 
-		//draw show changes
-		SDL_RenderPresent(wrapper.getRenderer());
+		//draw changes
+		wrapper.drawScreen();
 
 		//if this int is an Uint32 it crashes for some reason
 		int delay = FRAME_INTERVAL - (SDL_GetTicks() - firstTime);

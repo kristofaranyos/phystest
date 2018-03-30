@@ -38,7 +38,7 @@ AABB::AABB(unsigned long m_entityId, Uint32 createdAt)
  * @param velY Y velocity of entity (>=0)
  * @param createdAt Uint32 timestamp of creation returned by SDL_GetTicks()
  */
-AABB::AABB(unsigned long entityId, int posX, int posY, int width, int height, float velX, float velY, Uint32 createdAt)
+AABB::AABB(unsigned long entityId, int posX, int posY, int width, int height, float velX, float velY, float fricCoeff, Uint32 createdAt)
 	: m_entityId(entityId)
 	, m_posX(posX)
 	, m_posY(posY)
@@ -46,6 +46,7 @@ AABB::AABB(unsigned long entityId, int posX, int posY, int width, int height, fl
 	, m_height(height)
 	, m_velX(velX)
 	, m_velY(velY)
+	, m_fricCoeff(fricCoeff)
 	, m_createdAt(createdAt)
 {}
 
@@ -72,26 +73,18 @@ void AABB::draw(SDL_Renderer *renderer, SDL_Color color) const {
  */
 void AABB::setPos(std::pair<int, int> position, ParamSelect params) {
 	if (params == ParamSelect::First || params == ParamSelect::Both) {
-		if (position.first >= 0) {
 			this->m_posX = position.first;
-		} else {
-			throw std::out_of_range("First parameter of setPos is out of bounds");
-		}
 	}
 
 	if (params == ParamSelect::Second || params == ParamSelect::Both) {
-		if (position.second >= 0) {
 			this->m_posY = position.second;
-		} else {
-			throw std::out_of_range("Second parameter of setPos is out of bounds");
-		}
 	}
 }
 
 /**
  * Returns the current position of the entity
  *
- * @return std::pair<int, int> containing x and y position
+ * @return containing x and y position
  */
 std::pair<int, int> AABB::getPos() const {
 	return std::pair<int, int>(this->m_posX, this->m_posY);
@@ -116,7 +109,7 @@ void AABB::setVel(std::pair<float, float> velocity, ParamSelect params){
 /**
  * Returns the current velocity of the entity
  *
- * @return std::pair<int, int> containing x and y velocity
+ * @return containing x and y velocity
  */
 std::pair<float, float> AABB::getVel() const {
 	return std::pair<int, int>(this->m_velX, this->m_velY);
@@ -133,7 +126,7 @@ void AABB::setSize(std::pair<int, int> size, ParamSelect params) {
 		if (size.first >= 0) {
 			this->m_width = size.first;
 		} else {
-			throw std::out_of_range("First parameter of setSize is out of bounds");
+			throw std::out_of_range("Width can't be negative");
 		}
 	}
 
@@ -141,7 +134,7 @@ void AABB::setSize(std::pair<int, int> size, ParamSelect params) {
 		if (size.second >= 0) {
 			this->m_height = size.second;
 		} else {
-			throw std::out_of_range("Second parameter of setSize is out of bounds");
+			throw std::out_of_range("Height can't be negative");
 		}
 	}
 }
@@ -149,16 +142,25 @@ void AABB::setSize(std::pair<int, int> size, ParamSelect params) {
 /**
  * Returns the current size of the entity
  *
- * @return std::pair<int, int> containing width and height
+ * @return containing width and height
  */
 std::pair<int, int> AABB::getSize() const {
 	return std::pair<int, int>(this->m_width, this->m_height);
 }
 
 /**
+ * Returns the friction coefficient
+ *
+ * @return m_fricCoeff
+ */
+float AABB::getFricCoeff() const {
+	return this->m_fricCoeff;
+}
+
+/**
  * Returns the entity id
  *
- * @return unsigned long m_entityId
+ * @return m_entityId
  */
 unsigned long AABB::getEntityId() const {
 	return this->m_entityId;
@@ -167,7 +169,7 @@ unsigned long AABB::getEntityId() const {
 /**
  * Returns the timestamp of creation
  *
- * @return Uint32 m_createdAt
+ * @return m_createdAt
  */
 
 Uint32 AABB::getCreatedAt() const {

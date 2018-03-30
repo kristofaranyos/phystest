@@ -19,7 +19,12 @@ private:
 	SDL_Renderer *m_renderer;
 public:
 	SDLWrapper(std::string name, int posX, int posY, int width, int height, Uint32 type);
+
 	void init();
+	void drawColor(SDL_Color color);
+	void renderClear();
+	void drawScreen();
+
 	SDL_Window *getWindow();
 	SDL_Renderer *getRenderer();
 };
