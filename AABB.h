@@ -4,6 +4,7 @@
  * @author kristof
  * @version 1.0.0
  */
+
 #ifndef PHYSTEST_AABB_H
 #define PHYSTEST_AABB_H
 

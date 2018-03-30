@@ -1,6 +1,9 @@
-//
-// Created by kristof on 2018.03.30..
-//
+/**
+ * SDLWrapper declarations
+ *
+ * @author kristof
+ * @version 1.0.0
+ */
 
 #ifndef PHYSTEST_SDLWRAPPER_H
 #define PHYSTEST_SDLWRAPPER_H
@@ -13,12 +16,12 @@ private:
 	std::string m_name;
 	int m_posX, m_posY;
 	const int m_screenWidth, m_screenHeight;
-	const Uint32 m_windowType;
+	const Uint32 m_windowFlags;
 
 	SDL_Window *m_window;
 	SDL_Renderer *m_renderer;
 public:
-	SDLWrapper(std::string name, int posX, int posY, int width, int height, Uint32 type);
+	SDLWrapper(std::string name, int posX, int posY, int width, int height, Uint32 flags);
 
 	void init();
 	void drawColor(SDL_Color color);
