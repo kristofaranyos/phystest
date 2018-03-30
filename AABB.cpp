@@ -48,6 +48,21 @@ AABB::AABB(unsigned long entityId, int posX, int posY, int width, int height, fl
 {}
 
 /**
+ * Draws the entity through a renderer instance
+ *
+ * @param renderer Pointer to an SDL_Renderer instance
+ * @param color SDL_Color defining the color of the entity
+ */
+void AABB::draw(SDL_Renderer *renderer, SDL_Color color) const {
+	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+	for (int i = 1; i < this->m_width ; ++i) {
+		for (int j = 1; j < this->m_height; ++j) {
+			SDL_RenderDrawPoint(renderer, this->m_posX + i, this->m_posY + j);
+		}
+	}
+}
+
+/**
  * Sets one or two components of the position of the entity
  *
  * @param position std::pair<int, int> containing x and y positions, unused position can be arbitrary
@@ -163,13 +178,4 @@ unsigned long AABB::getEntityId() const {
 
 Uint32 AABB::getCreatedAt() const {
 	return this->m_createdAt;
-}
-
-void AABB::draw(SDL_Renderer *renderer, SDL_Color color) const {
-	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-	for (int i = 1; i < this->m_width ; ++i) {
-		for (int j = 1; j < this->m_height; ++j) {
-			SDL_RenderDrawPoint(renderer, this->m_posX + i, this->m_posY + j);
-		}
-	}
 }

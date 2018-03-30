@@ -98,13 +98,13 @@ int main() {
 
 			//X bounds
 			if (tPosX < 0) {
-				entity.setPos(std::pair<int, int>(0, 0), AABB::First);
-				entity.setSpeed(std::pair<float, float>(-entity.getSpeed().first * WALL_BOUNCE, 0.f), AABB::First);
+				entity.setPos(std::pair<int, int>(0, 0), AABB::ParamSelect::First);
+				entity.setSpeed(std::pair<float, float>(-entity.getSpeed().first * WALL_BOUNCE, 0.f), AABB::ParamSelect::First);
 			} else if (tPosX > SCREEN_WIDTH - entity.getSize().first) {
-				entity.setPos(std::pair<int, int>(SCREEN_WIDTH - entity.getSize().first, 0), AABB::First);
-				entity.setSpeed(std::pair<float, float>(-entity.getSpeed().first * WALL_BOUNCE, 0.f), AABB::First);
+				entity.setPos(std::pair<int, int>(SCREEN_WIDTH - entity.getSize().first, 0), AABB::ParamSelect::First);
+				entity.setSpeed(std::pair<float, float>(-entity.getSpeed().first * WALL_BOUNCE, 0.f), AABB::ParamSelect::First);
 			} else {
-				entity.setPos(std::pair<int, int>(tPosX, 0), AABB::First);
+				entity.setPos(std::pair<int, int>(tPosX, 0), AABB::ParamSelect::First);
 			}
 
 			/*

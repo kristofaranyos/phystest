@@ -25,7 +25,7 @@ public:
     AABB(unsigned long m_entityId, Uint32 createdAt);
 	AABB(unsigned long m_entityId, int posX, int posY, int width, int height, float velX, float velY, Uint32 createdAt);
 
-	enum ParamSelect {First, Second, Both};
+	enum class ParamSelect {First, Second, Both};
 
 	void setPos(std::pair<int, int> position, ParamSelect params);
 	std::pair<int, int> getPos() const;
