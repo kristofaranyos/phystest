@@ -1,30 +1,29 @@
-/*
- * AABB declarations
- *
- * @version 1.0.0
- */
+//
+// Created by kristof on 2018.03.31..
+//
 
-#ifndef PHYSTEST_AABB_H
-#define PHYSTEST_AABB_H
+#ifndef PHYSTEST_PHYSICSENTITY_HPP
+#define PHYSTEST_PHYSICSENTITY_HPP
+
 
 #include <utility>
 
 #include <SDL2/SDL.h>
 
-class AABB {
+class PhysicsEntity {
 private:
-    unsigned long m_entityId;
-    int m_posX;
-    int m_posY;
-    int m_width;
-    int m_height;
-    float m_velX; // positive = right, negative = left
-    float m_velY; // positive = down. negative = up
+	unsigned long m_entityId;
+	int m_posX;
+	int m_posY;
+	int m_width;
+	int m_height;
+	float m_velX; // positive = right, negative = left
+	float m_velY; // positive = down. negative = up
 	float m_fricCoeff;
-    Uint32 m_createdAt;
+	Uint32 m_createdAt;
 public:
-    AABB(unsigned long m_entityId, Uint32 createdAt);
-	AABB(unsigned long m_entityId, int posX, int posY, int width, int height, float velX, float velY, float fricCoeff, Uint32 createdAt);
+	PhysicsEntity(unsigned long m_entityId, Uint32 createdAt);
+	PhysicsEntity(unsigned long m_entityId, int posX, int posY, int width, int height, float velX, float velY, float fricCoeff, Uint32 createdAt);
 
 	enum class ParamSelect {First, Second, Both};
 
@@ -46,4 +45,4 @@ public:
 };
 
 
-#endif //PHYSTEST_AABB_H
+#endif //PHYSTEST_PHYSICSENTITY_HPP

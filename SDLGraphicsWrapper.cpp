@@ -4,7 +4,7 @@
  * @version 1.0.0
  */
 
-#include "SDLWrapper.hpp"
+#include "SDLGraphicsWrapper.hpp"
 #include <stdexcept>
 
 /**
@@ -19,7 +19,7 @@
  * @param height Height of the window
  * @param type Init flags as described in SDL2 documentation of SDL_InitSubSystem
  */
-SDLWrapper::SDLWrapper(std::string name, int posX, int posY, int width, int height, Uint32 flags)
+SDLGraphicsWrapper::SDLGraphicsWrapper(std::string name, int posX, int posY, int width, int height, Uint32 flags)
 	: m_name(name)
 	, m_posX(posX)
 	, m_posY(posY)
@@ -35,7 +35,7 @@ SDLWrapper::SDLWrapper(std::string name, int posX, int posY, int width, int heig
  *
  * @throws std::runtime_error When an error occurs in SDL init process
  */
-void SDLWrapper::init() {
+void SDLGraphicsWrapper::init() {
 	if (SDL_InitSubSystem(SDL_INIT_EVERYTHING) != 0) {
 		throw std::runtime_error(std::string("SDL_InitSubSystem error: ").append(SDL_GetError()));
 	}
@@ -61,7 +61,7 @@ void SDLWrapper::init() {
  *
  * @param color Color to use for drawing
  */
-void SDLWrapper::drawColor(SDL_Color color) {
+void SDLGraphicsWrapper::drawColor(SDL_Color color) {
 	SDL_SetRenderDrawColor(this->m_renderer, color.r, color.g, color.b, color.a);
 }
 
@@ -70,7 +70,7 @@ void SDLWrapper::drawColor(SDL_Color color) {
  *
  * @author kristof
  */
-void SDLWrapper::renderClear() {
+void SDLGraphicsWrapper::renderClear() {
 	SDL_RenderClear(this->m_renderer);
 }
 
@@ -79,7 +79,7 @@ void SDLWrapper::renderClear() {
  *
  * @author kristof
  */
-void SDLWrapper::drawScreen() {
+void SDLGraphicsWrapper::drawScreen() {
 	SDL_RenderPresent(this->m_renderer);
 }
 
@@ -90,7 +90,7 @@ void SDLWrapper::drawScreen() {
  *
  * @return m_window
  */
-SDL_Window *SDLWrapper::getWindow() {
+SDL_Window *SDLGraphicsWrapper::getWindow() {
 	return this->m_window;
 }
 
@@ -101,6 +101,6 @@ SDL_Window *SDLWrapper::getWindow() {
  *
  * @return m_renderer
  */
-SDL_Renderer *SDLWrapper::getRenderer() {
+SDL_Renderer *SDLGraphicsWrapper::getRenderer() {
 	return this->m_renderer;
 }
