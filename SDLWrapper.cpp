@@ -5,7 +5,7 @@
  * @version 1.0.0
  */
 
-#include "SDLWrapper.h"
+#include "SDLWrapper.hpp"
 #include <stdexcept>
 
 /**

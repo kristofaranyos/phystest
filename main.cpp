@@ -11,9 +11,9 @@
 
 #include <SDL2/SDL.h>
 
-#include "SDLWrapper.h"
-#include "Constants.h"
-#include "AABB.h"
+#include "SDLWrapper.hpp"
+#include "Constants.hpp"
+#include "AABB.hpp"
 
 int main() {
 	//disable c stream syncing

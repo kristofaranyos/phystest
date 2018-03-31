@@ -5,7 +5,7 @@
  * @version 1.0.1
  */
 
-#include "AABB.h"
+#include "AABB.hpp"
 
 #include <stdexcept>
 
