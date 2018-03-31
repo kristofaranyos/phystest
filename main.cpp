@@ -100,7 +100,6 @@ int main() {
 				entity.setPos(std::pair<int, int>(tPosX, 0), AABB::ParamSelect::First);
 			}
 
-
 			//Y bounds
 			if (tPosY < SCREEN_HEIGHT - entity.getSize().first) {
 				entity.setPos(std::pair<int, int>(0, tPosY), AABB::ParamSelect::Second);
