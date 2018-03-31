@@ -1,5 +1,5 @@
 /*
- * PhysicsEntity //todo
+ * Base class for PhysicsEntity
  *
  * @version 1.0.0
  */
@@ -9,7 +9,7 @@
 #include <stdexcept>
 
 /**
- * Basic ctor for AABB
+ * Basic ctor for PhysicsEntity
  *
  * @author kristof
  *
@@ -28,7 +28,7 @@ PhysicsEntity::PhysicsEntity(unsigned long m_entityId, Uint32 createdAt)
 {}
 
 /**
- * Full ctor for AABB
+ * Full ctor for PhysicsEntity
  *
  * @author kristof
  *

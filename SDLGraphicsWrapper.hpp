@@ -28,6 +28,8 @@ public:
 	void renderClear();
 	void drawScreen();
 
+	void quit();
+
 	SDL_Window *getWindow();
 	SDL_Renderer *getRenderer();
 };

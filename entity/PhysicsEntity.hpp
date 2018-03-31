@@ -1,6 +1,8 @@
-//
-// Created by kristof on 2018.03.31..
-//
+/*
+ * PhysicsEntity declarations
+ *
+ * @version 1.0.0
+ */
 
 #ifndef PHYSTEST_PHYSICSENTITY_HPP
 #define PHYSTEST_PHYSICSENTITY_HPP

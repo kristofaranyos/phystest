@@ -104,3 +104,12 @@ SDL_Window *SDLGraphicsWrapper::getWindow() {
 SDL_Renderer *SDLGraphicsWrapper::getRenderer() {
 	return this->m_renderer;
 }
+
+/**
+ * Deletes SDL graphics resources and quits SDL
+ */
+void SDLGraphicsWrapper::quit() {
+	SDL_DestroyRenderer(this->m_renderer);
+	SDL_DestroyWindow(this->m_window);
+	SDL_Quit();
+}

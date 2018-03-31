@@ -38,20 +38,20 @@ void PhysicsEngine::run() {
 
 	while (!quit) {
 		firstTime = SDL_GetTicks();
-		while (SDL_PollEvent(&e)) {
-			if (e.type == SDL_QUIT) {
+		while (SDL_PollEvent(&this->m_event)) {
+			if (this->m_event.type == SDL_QUIT) {
 				quit = true;
-			} else if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
+			} else if (this->m_event.type == SDL_KEYDOWN && this->m_event.key.keysym.sym == SDLK_ESCAPE) {
 				quit = true;
-			} else if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
+			} else if (this->m_event.type == SDL_MOUSEBUTTONDOWN && this->m_event.button.button == SDL_BUTTON_LEFT) {
 				clicked = 0;
 				clickTimes[0] = SDL_GetTicks();
 				mouseState = SDL_GetMouseState(&mousePositions[0][0], &mousePositions[0][1]);
-			} else if (e.type == SDL_MOUSEBUTTONUP && e.button.button == SDL_BUTTON_LEFT) {
+			} else if (this->m_event.type == SDL_MOUSEBUTTONUP && this->m_event.button.button == SDL_BUTTON_LEFT) {
 				clicked = 1;
 				clickTimes[1] = SDL_GetTicks();
 				mouseState = SDL_GetMouseState(&mousePositions[1][0], &mousePositions[1][1]);
-			} else if (e.type == SDL_MOUSEBUTTONUP && e.button.button == SDL_BUTTON_RIGHT) {
+			} else if (this->m_event.type == SDL_MOUSEBUTTONUP && this->m_event.button.button == SDL_BUTTON_RIGHT) {
 				if (!this->m_entities.empty()) {
 					std::cout << "removed entity: " << this->m_entities.size() - 1 << " at " << (SDL_GetTicks() - startTime) * TO_SEC << std::endl;
 					this->m_entities.pop_back();

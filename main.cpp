@@ -5,14 +5,12 @@
  */
 
 #include <iostream>
-#include <vector>
-#include <cmath>
 
 #include <SDL2/SDL.h>
 
-#include "SDLGraphicsWrapper.hpp"
 #include "Constants.hpp"
 
+#include "SDLGraphicsWrapper.hpp"
 #include "PhysicsEngine.hpp"
 
 int main() {
@@ -28,15 +26,10 @@ int main() {
 		return 1;
 	}
 
-
 	PhysicsEngine engine(wrapper);
 	engine.run();
 
-
-	//quit close sdl
-	SDL_DestroyRenderer(wrapper.getRenderer());
-	SDL_DestroyWindow(wrapper.getWindow());
-	SDL_Quit();
+	wrapper.quit();
 
 	return 0;
 }
