@@ -1,7 +1,6 @@
-/**
+/*
  * Basic SDL2 wrapper for easier usage
  *
- * @author kristof
  * @version 1.0.0
  */
 
@@ -10,6 +9,8 @@
 
 /**
  * Constructor for passing window application properties
+ *
+ * @author kristof
  *
  * @param name Application name that appears in the title bar
  * @param posX x position of the top left corner of the window
@@ -29,6 +30,8 @@ SDLWrapper::SDLWrapper(std::string name, int posX, int posY, int width, int heig
 
 /**
  * Initializes the SDL system itself
+ *
+ * @author kristof
  *
  * @throws std::runtime_error When an error occurs in SDL init process
  */
@@ -54,6 +57,8 @@ void SDLWrapper::init() {
 /**
  * Sets the drawcolor
  *
+ * @author kristof
+ *
  * @param color Color to use for drawing
  */
 void SDLWrapper::drawColor(SDL_Color color) {
@@ -62,6 +67,8 @@ void SDLWrapper::drawColor(SDL_Color color) {
 
 /**
  * Clears the screen
+ *
+ * @author kristof
  */
 void SDLWrapper::renderClear() {
 	SDL_RenderClear(this->m_renderer);
@@ -69,6 +76,8 @@ void SDLWrapper::renderClear() {
 
 /**
  * Draws changes made to the screen
+ *
+ * @author kristof
  */
 void SDLWrapper::drawScreen() {
 	SDL_RenderPresent(this->m_renderer);
@@ -76,6 +85,8 @@ void SDLWrapper::drawScreen() {
 
 /**
  * Returns the pointer to the current window
+ *
+ * @author kristof
  *
  * @return m_window
  */
@@ -85,6 +96,8 @@ SDL_Window *SDLWrapper::getWindow() {
 
 /**
  * Returns the pointer to the current renderer
+ *
+ * @author kristof
  *
  * @return m_renderer
  */

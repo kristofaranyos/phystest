@@ -1,8 +1,7 @@
-/**
+/*
  * Axis Aligned Bounding Box: basic rectangle-like entity
  *
- * @author kristof
- * @version 1.0.1
+ * @version 1.0.0
  */
 
 #include "AABB.hpp"
@@ -11,6 +10,8 @@
 
 /**
  * Basic ctor for AABB
+ *
+ * @author kristof
  *
  * @param m_entityId ID of the entity (so its trackable among multiple instances)
  * @param createdAt Uint32 timestamp of creation returned by SDL_GetTicks()
@@ -28,6 +29,8 @@ AABB::AABB(unsigned long m_entityId, Uint32 createdAt)
 
 /**
  * Full ctor for AABB
+ *
+ * @author kristof
  *
  * @param entityId ID of the entity (so its trackable among multiple instances)
  * @param posX X position of the entity (>=0)
@@ -53,6 +56,8 @@ AABB::AABB(unsigned long entityId, int posX, int posY, int width, int height, fl
 /**
  * Draws the entity through a renderer instance
  *
+ * @author kristof
+ *
  * @param renderer Pointer to an SDL_Renderer instance
  * @param color SDL_Color defining the color of the entity
  */
@@ -67,6 +72,8 @@ void AABB::draw(SDL_Renderer *renderer, SDL_Color color) const {
 
 /**
  * Sets one or two components of the position of the entity
+ *
+ * @author kristof
  *
  * @param position std::pair<int, int> containing x and y positions, unused position can be arbitrary
  * @param params ParamSelect enum defining which position to set
@@ -84,6 +91,8 @@ void AABB::setPos(std::pair<int, int> position, ParamSelect params) {
 /**
  * Returns the current position of the entity
  *
+ * @author kristof
+ *
  * @return containing x and y position
  */
 std::pair<int, int> AABB::getPos() const {
@@ -92,6 +101,8 @@ std::pair<int, int> AABB::getPos() const {
 
 /**
  * Sets one or two components of the velocity of the entity
+ *
+ * @author kristof
  *
  * @param velocity position std::pair<float, float> containing x and y velocities, unused position can be arbitrary
  * @param params ParamSelect enum defining which velocity to set
@@ -109,6 +120,8 @@ void AABB::setVel(std::pair<float, float> velocity, ParamSelect params){
 /**
  * Returns the current velocity of the entity
  *
+ * @author kristof
+ *
  * @return containing x and y velocity
  */
 std::pair<float, float> AABB::getVel() const {
@@ -117,6 +130,8 @@ std::pair<float, float> AABB::getVel() const {
 
 /**
  * Sets one or two components of the size of the entity
+ *
+ * @author kristof
  *
  * @param position std::pair<float, float> containing width and height, unused position can be arbitrary
  * @param params ParamSelect enum defining which size to set
@@ -142,6 +157,8 @@ void AABB::setSize(std::pair<int, int> size, ParamSelect params) {
 /**
  * Returns the current size of the entity
  *
+ * @author kristof
+ *
  * @return containing width and height
  */
 std::pair<int, int> AABB::getSize() const {
@@ -150,6 +167,8 @@ std::pair<int, int> AABB::getSize() const {
 
 /**
  * Returns the friction coefficient
+ *
+ * @author kristof
  *
  * @return m_fricCoeff
  */
@@ -160,6 +179,8 @@ float AABB::getFricCoeff() const {
 /**
  * Returns the entity id
  *
+ * @author kristof
+ *
  * @return m_entityId
  */
 unsigned long AABB::getEntityId() const {
@@ -168,6 +189,8 @@ unsigned long AABB::getEntityId() const {
 
 /**
  * Returns the timestamp of creation
+ *
+ * @author kristof
  *
  * @return m_createdAt
  */

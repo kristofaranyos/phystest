@@ -1,7 +1,6 @@
-/**
+/*
  * Constants for the simulator
  *
- * @author kristof
  * @version 1.0.0
  */
 

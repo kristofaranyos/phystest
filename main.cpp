@@ -1,7 +1,6 @@
-/**
+/*
  * main
  *
- * @author kristof
  * @version 1.0.0
  */
 
