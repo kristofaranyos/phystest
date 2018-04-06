@@ -2,9 +2,7 @@
 #define PHYSTEST_MOVEMODULE_HPP
 
 
-#include "PhysicsModule.hpp"
-
-#include "../PhysicsEngine.hpp"
+#include "../PhysicsIncludes.hpp"
 
 class MoveModule : public PhysicsModule {
 public:
