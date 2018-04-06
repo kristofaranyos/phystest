@@ -24,8 +24,9 @@ PhysicsEntity::PhysicsEntity(unsigned long m_entityId, Uint32 createdAt)
 	, m_height(0)
 	, m_velX(0)
 	, m_velY(0)
-	, m_createdAt(createdAt)
-{}
+	, m_createdAt(createdAt) {
+
+}
 
 /**
  * Full ctor for PhysicsEntity
@@ -50,8 +51,9 @@ PhysicsEntity::PhysicsEntity(unsigned long entityId, int posX, int posY, int wid
 	, m_velX(velX)
 	, m_velY(velY)
 	, m_fricCoeff(fricCoeff)
-	, m_createdAt(createdAt)
-{}
+	, m_createdAt(createdAt) {
+
+}
 
 /**
  * Draws the entity through a renderer instance

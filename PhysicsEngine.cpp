@@ -9,7 +9,7 @@
 /**
  * Defeault constructor resizes the modules vector to 0 and reserves 10
  */
-PhysicsEngine::PhysicsEngine(SDLGraphicsWrapper &wrapper) : m_wrapper(wrapper) {
+PhysicsEngine::PhysicsEngine(SDLGraphicsWrapper &gWrapper) : m_graphicsWrapper(gWrapper) {
 	this->m_modules.resize(0);
 	this->m_modules.reserve(10);
 }
@@ -71,8 +71,8 @@ void PhysicsEngine::run() {
 		}
 
 		//reset screen
-		this->m_wrapper.drawColor(whiteColor);
-		this->m_wrapper.renderClear();
+		this->m_graphicsWrapper.drawColor(whiteColor);
+		this->m_graphicsWrapper.renderClear();
 
 		//recalculate states
 		for (auto &entity : this->m_entities) {
@@ -127,11 +127,11 @@ void PhysicsEngine::run() {
 			}
 
 			//draw entity
-			entity.draw(this->m_wrapper.getRenderer(), blackColor);
+			entity.draw(this->m_graphicsWrapper.getRenderer(), blackColor);
 		}
 
 		//draw changes
-		this->m_wrapper.drawScreen();
+		this->m_graphicsWrapper.drawScreen();
 
 		//if this int is an Uint32 it crashes for some reason
 		int delay = FRAME_INTERVAL - (SDL_GetTicks() - firstTime);

@@ -23,7 +23,7 @@
 class PhysicsEngine {
 private:
 	SDL_Event m_event;
-	SDLGraphicsWrapper m_wrapper;
+	SDLGraphicsWrapper m_graphicsWrapper;
 	std::vector<PhysicsModule> m_modules;
 	std::vector<PhysicsEntity> m_entities;
 public:
