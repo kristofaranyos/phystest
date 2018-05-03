@@ -7,13 +7,20 @@
 #ifndef PHYSTEST_PHYSICSMODULE_HPP
 #define PHYSTEST_PHYSICSMODULE_HPP
 
+
+#include <iostream>
+
 #include "../entity/PhysicsEntity.hpp"
 
 class PhysicsModule {
-private:
-
+protected:
+	std::string m_moduleName;
 public:
-	void runFrame(PhysicsEntity &entity);
+	PhysicsModule() : m_moduleName("PhysicsModule") {}
+
+	virtual void runFrame(PhysicsEntity &entity) {};
+
+	virtual std::string getName() {};
 };
 
 

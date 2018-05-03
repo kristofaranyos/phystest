@@ -25,7 +25,7 @@ PhysicsEngine::PhysicsEngine(SDLGraphicsWrapper &gWrapper) : m_graphicsWrapper(g
  *
  * @param mod A PhysicsModule instance
  */
-void PhysicsEngine::addModule(PhysicsModule &mod) {
+void PhysicsEngine::addModule(PhysicsModule *mod) {
 	this->m_modules.emplace_back(mod);
 }
 
@@ -61,16 +61,22 @@ void PhysicsEngine::run() {
 					std::cout << "removed entity: " << this->m_entities.size() - 1 << " at " << (SDL_GetTicks() - startTime) * TO_SEC << std::endl;
 					this->m_entities.pop_back();
 				}
+			} else if (this->m_event.type == SDL_MOUSEBUTTONUP && this->m_event.button.button == SDL_BUTTON_MIDDLE) {
+				std::cout << "removed * at " << (SDL_GetTicks() - startTime) * TO_SEC << std::endl;
+				this->m_entities.clear();
 			}
 
 			if (clicked > 0) { //first click->0, second->1
 				startSpeed[0] = (mousePositions[1][0] - mousePositions[0][0]) / ((clickTimes[1] - clickTimes[0]) * TO_SEC) * THROW_SPEEDX;
 				startSpeed[1] = (mousePositions[1][1] - mousePositions[0][1]) / ((clickTimes[1] - clickTimes[0]) * TO_SEC) * THROW_SPEEDY;
 
-				PhysicsEntity newEntity(this->m_entities.size(), mousePositions[1][0] - 10, mousePositions[1][1] - 10, 20, 20, startSpeed[0], startSpeed[1], 0.01f , SDL_GetTicks());
+				PhysicsEntity *newEntity = new PhysicsEntity(this->m_entities.size(), mousePositions[1][0] - 10,
+															 mousePositions[1][1] - 10, 20, 20, startSpeed[0],
+															 startSpeed[1], 0.01f, SDL_GetTicks());
 				this->m_entities.push_back(newEntity);
 
-				std::cout << "added entity: " << newEntity.getEntityId() << " at " << (SDL_GetTicks() - startTime) * TO_SEC << std::endl;
+				std::cout << "added entity: " << newEntity->getEntityId() << " at "
+						  << (SDL_GetTicks() - startTime) * TO_SEC << std::endl;
 				clicked = -1; //reset the flag
 			}
 		}
@@ -79,14 +85,17 @@ void PhysicsEngine::run() {
 		this->m_graphicsWrapper.drawColor(whiteColor);
 		this->m_graphicsWrapper.renderClear();
 
-		MoveModule move;
+		//MoveModule move;
 
 		//recalculate states
 		for (auto &entity : this->m_entities) {
-			move.runFrame(entity);
+			for (auto &module : this->m_modules) {
+				module->runFrame(*entity);
+			}
+			//move.runFrame(entity);
 
 			//draw entity
-			entity.draw(this->m_graphicsWrapper.getRenderer(), blackColor);
+			entity->draw(this->m_graphicsWrapper.getRenderer(), blackColor);
 		}
 
 		//draw changes

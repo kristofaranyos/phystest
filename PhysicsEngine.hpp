@@ -13,14 +13,14 @@
 
 class PhysicsEngine {
 private:
-	SDL_Event m_event;
-	SDLGraphicsWrapper m_graphicsWrapper;
-	std::vector<PhysicsModule> m_modules;
-	std::vector<PhysicsEntity> m_entities;
+	SDL_Event                    m_event;
+	SDLGraphicsWrapper           m_graphicsWrapper;
+	std::vector<PhysicsModule *> m_modules;
+	std::vector<PhysicsEntity *> m_entities;
 public:
 	PhysicsEngine(SDLGraphicsWrapper &wrapper);
 
-	void addModule(PhysicsModule &mod);
+	void addModule(PhysicsModule *mod);
 	void run();
 };
 
